@@ -1,3 +1,6 @@
+
+
+
 const sendRequest = async (a, b, c) => {
     const response = await fetch(
         `/api/index.php?method=sum&a=${a}&b=${b}&c=${c}`
@@ -12,7 +15,7 @@ const sendRequest = async (a, b, c) => {
 const sendRequest2 = async (x, func, eps) => {
     const response = await fetch(
         `/api/index.php?method=derivative&x=${x}&func=${func}&eps=${eps}`
-    ); 
+    );
     const answer = await response.json()
     if (answer?.result === 'ok') {
         return answer.data;
@@ -45,4 +48,9 @@ const clickHandler2 = async () => {
 window.onload = function () {
     document.getElementById('button').addEventListener('click', clickHandler);
     document.getElementById('butDer').addEventListener('click', clickHandler2);
+
+    let canvas = document.getElementById('canvas');
+    let ctx = canvas.getContext('2d');
+    ctx.fillStyle = '#F08080';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
 }

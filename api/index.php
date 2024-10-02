@@ -24,6 +24,11 @@ function derivative($func, $x, $eps) {
     );
 }
 
+// сплайныыыыыыы  ыыыы ыы(
+function splines($p1, $p2, $p3) {
+    
+}
+
 // функция для получение результата...
 function getResult($params) {
     $method = $params['method'];
