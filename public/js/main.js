@@ -1,5 +1,7 @@
 const sendRequest = async (a, b, c) => {
-    const response = await fetch(`/api/index.php?a=${a}&b=${b}&c=${c}`); // - ОТПРАВЛЯЕТ запрос и возвращает значение как обычная привычная нам функция
+    const response = await fetch(
+        `/api/index.php?method=sum&a=${a}&b=${b}&c=${c}`
+    ); // - ОТПРАВЛЯЕТ запрос и возвращает значение как обычная привычная нам функция
     const answer = await response.json()
     if (answer?.result === 'ok') {
         return answer.data;
@@ -8,7 +10,9 @@ const sendRequest = async (a, b, c) => {
 }
 
 const sendRequest2 = async (x, func, eps) => {
-    const response = await fetch(`/api/index.php?x=${x}&func=${func}&eps=${eps}`); 
+    const response = await fetch(
+        `/api/index.php?method=derivative&x=${x}&func=${func}&eps=${eps}`
+    ); 
     const answer = await response.json()
     if (answer?.result === 'ok') {
         return answer.data;
