@@ -2,17 +2,19 @@
 
 header('Content-Type: application/json; charset=utf-8');
 
-function der($func, $x, $eps) {
-    $fx = $func($x);
-    $f_plus_eps = $func($x + $eps);
-    return (($f_plus_eps - $fx) / $eps);
-}
-
+// сумма блин
 function sum($a, $b, $c) {
     return array(
         'result' => 'ok',
         'data' => $a + $b + $c
     );
+}
+
+// производная нафик
+function der($func, $x, $eps) {
+    $fx = $func($x);
+    $f_plus_eps = $func($x + $eps);
+    return (($f_plus_eps - $fx) / $eps);
 }
 
 function derivative($func, $x, $eps) {
@@ -22,6 +24,7 @@ function derivative($func, $x, $eps) {
     );
 }
 
+// функция для получение результата...
 function getResult($params) {
     $method = $params['method'];
     switch ($method) {
@@ -36,12 +39,8 @@ function getResult($params) {
     );
 }
 
-//$method = $_GET['method']; // - помогает обработать более чем 1 запрос в бэкенде
 
-$a = $_GET["a"]; 
-$b = $_GET["b"];
-$c = $_GET["c"];
-
+// ну то самое
 if (isset($_GET['method']) && !empty($_GET['method'])) {
     $method = $_GET['method'];
     echo(json_encode(getResult($_GET)));
@@ -53,9 +52,11 @@ if (isset($_GET['method']) && !empty($_GET['method'])) {
 }
 
 
+/*$a = $_GET["a"]; 
+$b = $_GET["b"];
+$c = $_GET["c"];*/
 
-
-
+//$method = $_GET['method']; // - помогает обработать более чем 1 запрос в бэкенде
 
 /*
 // корни уравнения
