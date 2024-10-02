@@ -25,8 +25,35 @@ function derivative($func, $x, $eps) {
 }
 
 // сплайныыыыыыы  ыыыы ыы(
-function splines($p1, $p2, $p3) {
-    
+function spline($x1, $y1, $x2, $y2, $x3, $y3) {
+    $h1 = $x2 - $x1;
+    $h2 = $x3 - $x2;
+
+    $a1 = ($y2 - $y1) / $h1;
+    $a2 = ($y3 - $y2) / $h2;
+
+    $b1 = 3 * (($y2 - $y1) / ($h1 * $h1)) - 2 * (($y3 - $y1) / ($h1 * $h2)) + (($y3 - $y2) / ($h2 * $h2));
+    $b2 = 3 * (($y3 - $y2) / ($h2 * $h2)) - 2 * (($y3 - $y1) / ($h1 * $h2)) + (($y2 - $y1) / ($h1 * $h1));
+
+    $c1 = (($y3 - $y1) / ($h1 * $h2)) - (($y2 - $y1) / ($h1 * $h1)) - $b1 * $h1 / 3;
+    $c2 = (($y2 - $y1) / ($h1 * $h2)) - (($y3 - $y2) / ($h2 * $h2)) - $b2 * $h2 / 3;
+
+    $splinePoints = [];
+    $x = $x1;
+    while ($x <= $x3) {
+        if ($x <= $x2) {
+            $y = $y1 + $a1 * ($x - $x1) + $b1 * pow($x - $x1, 2) / 2 + $c1 * pow($x - $x1, 3) / 6;
+        } else {
+            $y = $y2 + $a2 * ($x - $x2) + $b2 * pow($x - $x2, 2) / 2 + $c2 * pow($x - $x2, 3) / 6;
+        }
+        $splinePoints[] = ['x' => $x, 'y' => $y];
+        $x += 0.01; // шаг для отрисовки графека
+    }
+
+    return array(
+        'result' => 'ok',
+        'splinePoints' => $splinePoints,
+    );
 }
 
 // функция для получение результата...
@@ -37,6 +64,8 @@ function getResult($params) {
             return sum($params['a'], $params['b'], $params['c']);
         case 'derivative': 
             return derivative($params['func'], $params['x'], $params['eps']);
+        case 'spline':
+            return spline($params['x1'], $params['y1'], $params['x2'], $params['y2'], $params['x3'], $params['y3']);
     }
     return array(
         'result' => 'error',
